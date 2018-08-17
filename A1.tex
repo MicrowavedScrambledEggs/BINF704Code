@@ -1,0 +1,36 @@
+\documentclass{article}
+
+\title{BIOINF 702 Assignment 1}
+
+\author{Badi James (bjam575)}
+
+\begin{document}
+	
+	\maketitle
+	
+	\section{Introduction}
+	
+	\paragraph{}In this assignment I will be using an Expectation-Maximization algorithm to estimate blood type allele frequencies from a sample of blood type phenotype counts. 
+	\paragraph{}Blood type is a phenotype that is determined by one genetic loci and is inherited in a mendilian fashion. For loci where there are only two allele types that either have a dominant recessive relationship or a distinct third phenotype occuring in heterozygotes, if the population is in Hardy-Weinberg equilibrium then allele frequencies can be derived from phenotype frequencies.
+	For alleles $D$ and $d$ with  this can be found using the 
+	\[p_{AA}\] However there are three alleles for blood type. As there are only 4 distinct phenotypes for the 6 possible pairs of alleles (i.e someone with blood type A could have either genotype AA or AO) allele frequencies can not be directly derived from phenotype counts. Thus the need for a method that finds maximum likelihood estimates for the alelle frequencies, such as Expecttation-Maximization.
+	
+	\section{Method}
+	
+	Given phenotype counts $n_A, n_B, n_{AB}, n_O$ for blood types A, B, AB and O respectively, the Expecttation-Maximization algorithim works as follows:
+	
+	\begin{enumerate}
+		\item Input arbitrary allele frequencies $p_A, p_B, p_O$ that sum to 1
+		\item Assuming HW-Equilibrium, estimate genotype counts for $n_{AO}$ and $n_{BO}$ using $n_{AO} = 2Np_Ap_O$ and $n_{BO} = 2Np_Bp_O$, where $N =$ total sample size.
+		\item Estimate genotype counts for $n_{AA}$ and $n_{BB}$ using $n_{AA} = n_{A} - n_{AO}$ and $n_{BB} = n_{B} - n_{BO}$
+		\item Calculate new allele frequency estimates as follows:
+		\[p_{ANew} = \frac{2n_{AA} + n_{AO} + n_{AB}}{2N}\]
+		\[p_{BNew} = \frac{2n_{BB} + n_{BO} + n_{AB}}{2N}\]		
+		\[p_{ONew} = \frac{2n_{O} + n_{AO} + n_{BO}}{2N}\]	
+		\item If the new allele frequency estimates equal the old estimates,	output $p_A, p_B, p_O$. Else replace the values for $p_A, p_B, p_O$ with the values for $p_{ANew}, p_{BNew}, p_{ONew}$ respectively and repeat steps 2 to 5
+		
+	\end{enumerate}
+
+	EM algorithms potentially get stuck in local maxima instead of finding the global maximum, depending on the initial input values. To see if this occured for this implementation, the algorithm was run 50 times with different random initial allele frequency inputs.
+
+\end{document}
