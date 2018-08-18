@@ -1,6 +1,10 @@
 \documentclass{article}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{lineno}
+\usepackage{fancyvrb}
 
-\title{BIOINF 702 Assignment 1}
+\title{\vspace{-2.0cm}BIOINF 702 Assignment 1}
 
 \author{Badi James (bjam575)}
 
@@ -10,27 +14,155 @@
 	
 	\section{Introduction}
 	
-	\paragraph{}In this assignment I will be using an Expectation-Maximization algorithm to estimate blood type allele frequencies from a sample of blood type phenotype counts. 
-	\paragraph{}Blood type is a phenotype that is determined by one genetic loci and is inherited in a mendilian fashion. For loci where there are only two allele types that either have a dominant recessive relationship or a distinct third phenotype occuring in heterozygotes, if the population is in Hardy-Weinberg equilibrium then allele frequencies can be derived from phenotype frequencies.
-	For alleles $D$ and $d$ with  this can be found using the 
-	\[p_{AA}\] However there are three alleles for blood type. As there are only 4 distinct phenotypes for the 6 possible pairs of alleles (i.e someone with blood type A could have either genotype AA or AO) allele frequencies can not be directly derived from phenotype counts. Thus the need for a method that finds maximum likelihood estimates for the alelle frequencies, such as Expecttation-Maximization.
+	\paragraph{}Blood type is a phenotype that is determined by one genetic loci and is inherited in a mendelian fashion. For loci where there are only two allele types that either have a dominant recessive relationship or a distinct third phenotype occurring in heterozygous, if the population is in Hardy-Weinberg equilibrium then allele frequencies can be derived from phenotype frequencies.
+	For alleles $D$ and $d$ with frequencies $p_D$ and $p_d$ this can be found using the HW equations: \\
+	$p_{DD} = p_D^2$, $p_{Dd} = 2p_Dp_d$, $p_{dd} = p_d^2$ and
+	\[p_D^2 + 2p_Dp_d + p_d^2 = 1\]
+	where $p_{DD}, p_{Dd}, p_{dd}$ are the frequencies for genotypes $DD, Dd$ and $dd$ respectively. If each genotype has a distinct phenotype, or if one of the alleles, i.e $d$, is recessive to the other, $p_d$ can be found from the square root of the frequency of the phenotype associated with genotype $dd$. As $D$ and $d$ are the only two alleles, $p_D = 1 - p_d$.
+	
+	\paragraph{} However there are three alleles for blood type. As there are only 4 distinct phenotypes for the 6 possible pairs of alleles (i.e someone with blood type A could have either genotype AA or AO) allele frequencies can not be directly derived from phenotype counts. Thus the need for a method that finds maximum likelihood estimates for the allele frequencies, such as Expectation-Maximization (EM). 
+	
+	\paragraph{}EM involves two steps: Find the values of latent variables (or maximum likelihood estimates of them) that can be inferred from observed data and estimates of unknown parameters. Then use the latent variable estimates to make new estimates for the unknown parameters, using functions different to those used in the first step. The two steps are repeated until the new unknown parameter estimates found in the second step are indistinguishable from the estimates used in the first step. 
 	
 	\section{Method}
 	
-	Given phenotype counts $n_A, n_B, n_{AB}, n_O$ for blood types A, B, AB and O respectively, the Expecttation-Maximization algorithim works as follows:
+	In the context of this assignment, the observed data is the phenotype counts $n_A = 15, n_B = 10, n_{AB} = 3, n_O = 1$ for blood types A, B, AB and O respectively; the latent variables are the genotype counts $n_{AA}, n_{AO}, n_{BB}, n_{BO}$ for genotypes AA, AO, BB and BO respectively; and the unknown parameters are the frequencies of alleles A, B and O: $p_A, p_B, p_O$. The Expectation-Maximization algorithm was implemented in R [Appendix .1]. It works as follows:
 	
 	\begin{enumerate}
 		\item Input arbitrary allele frequencies $p_A, p_B, p_O$ that sum to 1
-		\item Assuming HW-Equilibrium, estimate genotype counts for $n_{AO}$ and $n_{BO}$ using $n_{AO} = 2Np_Ap_O$ and $n_{BO} = 2Np_Bp_O$, where $N =$ total sample size.
-		\item Estimate genotype counts for $n_{AA}$ and $n_{BB}$ using $n_{AA} = n_{A} - n_{AO}$ and $n_{BB} = n_{B} - n_{BO}$
+		\item Assuming HW-Equilibrium, estimate genotype counts for $n_{AO}$ and $n_{BO}$ using $n_{AO} = 2Np_Ap_O$ and $n_{BO} = 2Np_Bp_O$, where $N =$ total sample size. [\emph{Appendix .1 lines 22, 24}]
+		\item Estimate genotype counts for $n_{AA}$ and $n_{BB}$ using $n_{AA} = n_{A} - n_{AO}$ and $n_{BB} = n_{B} - n_{BO}$. [\emph{Appendix .1 lines 23, 25}]
 		\item Calculate new allele frequency estimates as follows:
 		\[p_{ANew} = \frac{2n_{AA} + n_{AO} + n_{AB}}{2N}\]
 		\[p_{BNew} = \frac{2n_{BB} + n_{BO} + n_{AB}}{2N}\]		
 		\[p_{ONew} = \frac{2n_{O} + n_{AO} + n_{BO}}{2N}\]	
-		\item If the new allele frequency estimates equal the old estimates,	output $p_A, p_B, p_O$. Else replace the values for $p_A, p_B, p_O$ with the values for $p_{ANew}, p_{BNew}, p_{ONew}$ respectively and repeat steps 2 to 5
+		[\emph{Appendix .1 lines 27-29}]
+		\item If the new allele frequency estimates equal the old estimates, output $p_A, p_B, p_O$. Else replace the values for $p_A, p_B, p_O$ with the values for $p_{ANew}, p_{BNew}, p_{ONew}$ respectively and repeat steps 2 to 5. [\emph{Appendix .1 lines 31-38}]
 		
 	\end{enumerate}
 
-	EM algorithms potentially get stuck in local maxima instead of finding the global maximum, depending on the initial input values. To see if this occured for this implementation, the algorithm was run 50 times with different random initial allele frequency inputs.
+	EM algorithms potentially get stuck in local maxima instead of finding the global maximum likelihood estimate, depending on the initial input values. To see if this occurred for this implementation, the algorithm was run 50 times with different random initial allele frequency inputs. [\emph{Appendix .1 lines 45-67}]
+	 
+	\section{Results}
+	
+	All 50 executions output the same estimates for each allele frequency:
+	
+	\begin{center} $p_A = 0.4799$, $p_B = 0.3344$, $p_O = 0.1857$ \end{center}
+	
+	The median count of iterations through the EM loop until allele frequency estimates converged was 77 and the mean 76.82. 
+	
+	\section{Conclusion}
+	
+	\paragraph{}The fact that all inputs tried output the same frequency estimates indicates that the functions used to find the estimate do not have maxima other than the global maximum. If this is the case then Expectation-Maximisation is an effective approach to finding allele frequencies from a sample of phenotype counts, not only for blood types but for other traits where phenotypes are determined by a single genetic locus with multiple observed alleles.  
+	
+	\paragraph{}Of note is the comparison between phenotype frequencies calculated from these maximum likelihood estimates using HW and the observed phenotype frequencies.
+	\begin{table}[H]
+		\centering
+		\begin{tabular}{l|ll|ll}
+			\multirow{2}{*}{Phenotype} & \multicolumn{2}{l|}{Estimated frequency}  & \multicolumn{2}{l}{Observed frequency}    \\ \cline{2-5} 
+			& \multicolumn{1}{l|}{Calculation} & Value  & \multicolumn{1}{l|}{Calculation} & Value  \\ \hline
+			A                          & $p_A^2 + 2p_Ap_O$                & 0.4085 & $n_A \div N$                     & 0.5172 \\
+			B                          & $p_B^2 + 2p_Bp_O$                & 0.2361 & $n_B \div N$                     & 0.3448 \\
+			AB                         & $2p_Ap_B$                        & 0.3210 & $n_{AB} \div N$                  & 0.1034 \\
+			O                          & $p_O^2$                          & 0.0345 & $n_O \div N$                     & 0.0345
+		\end{tabular}
+	\end{table}
+
+	As can be observed in the above table, aside from O, the frequencies do not match, with AB being at much lower frequency than expected. This is possibly due to the sample being out of Hardy-Weinberg equilibrium. Further study would be needed to find which of the assumptions behind HW are not holding, and the EM model would need to be adjusted accordingly. However, this could just be sample variance and another larger sample may have phenotype frequencies closer to those estimated by the model. 
+	
+	\section{Appendix}
+	
+	\appendix
+	
+	\subsection{R Scrpt}
+	\begin{linenumbers}
+		\begin{Verbatim}[numbers=left]
+nA <- 15
+nB <- 10
+nAB <- 3
+nO <- 1 
+N <- nA +nB + nAB + nO
+realPhenFreqA <- nA / N 
+realPhenFreqB <- nB / N
+realPhenFreqAB <- nAB / N
+realPhenFreqO <- nO / N
+
+# Expectation Maximization for blood type allele frequencies
+# Takes a vector of initial allele frequency guesses (pInit) and observed
+# phenotype counts (nA, nB, nAB, nO)
+emBlood <- function(pInit, nA, nB, nAB, nO) {
+	if(sum(pInit) != 1) stop("Initial allele frequencies do not sum to 1")
+	pA <- pInit[1]
+	pB <- pInit[2]
+	pO <- pInit[3]
+	N <- nA +nB + nAB + nO
+	count <- 1
+	while(TRUE){
+		nAO <- 2* pA * pO * N
+		nAA <- nA - nAO
+		nBO <- 2* pB * pO * N
+		nBB <- nB - nBO
+		
+		newPA <- (2*nAA + nAO + nAB) / (2*N)
+		newPB <- (2*nBB + nBO + nAB) / (2*N)
+		newPO <- (2*nO + nBO + nAO) / (2*N)
+		
+		if (newPA != pA || newPB != pB || newPO != pO) {
+			pA <- newPA
+			pB <- newPB
+			pO <- newPO
+			count <- count + 1
+		} else {
+			break
+		}
+	}
+	alleleFreq <- c(pA, pB, pO, count)
+	names(alleleFreq) <- c("pA", "pB", "pO", "Iterations until Convergence")
+	return(alleleFreq)
+}
+
+# Create 50 random sets of initial allele frequencies
+# Use to test if different inputs result in finding different local maxima
+startfreq <- matrix(nrow = 50, ncol = 3)
+for(i in 1:50){
+	ps <- c(0,0,0)
+	place <- sample(1:3, 3)
+	bar <- runif(2, 0, 1)
+	ps[place[1]] <- min(bar)
+	ps[place[2]] <- max(bar) - min(bar)
+	ps[place[3]] <- 1-max(bar)
+	startfreq[i,] <- ps
+}
+# Check distribution of starting frequencies
+# hist(startfreq[,2]) 
+
+# Run EM on all input sets. Tally each output value for each frequency
+maxLAlleleFreq <- apply(startfreq, 1, emBlood, 
+nA = nA, nB = nB, nO = nO, nAB = nAB)
+maxLAlleleFreq <- t(maxLAlleleFreq)
+freqCounts <- list(table(maxLAlleleFreq[,1]), table(maxLAlleleFreq[,2]), 
+table(maxLAlleleFreq[,3]))
+names(freqCounts) <- colnames(maxLAlleleFreq[,1:3])
+# Check median and mean times through loop untill convergence
+medianRuns <- median(maxLAlleleFreq[,4])
+meanRuns <- mean(maxLAlleleFreq[,4])
+
+# See how phenotype frequencies calculated from an EM allele frequency
+# estimate compares to the observed phenotype frequencies
+pA <- maxLAlleleFreq[1,1]
+pB <- maxLAlleleFreq[1,2]
+pO <- maxLAlleleFreq[1,3]
+fAEst <- 2* pA * pO + pA**2
+fBEst <- 2* pB * pO + pB**2
+fABEst <- 2 * pA * pB
+fOEst <- pO**2
+
+estimated <- c(fAEst, fBEst, fABEst, fOEst)
+observed <- c(realPhenFreqA, realPhenFreqB, realPhenFreqAB, realPhenFreqO)
+comparison <- cbind(estimated, observed)
+row.names(comparison) <- c('A', 'B', 'AB', 'O')
+		\end{Verbatim}
+	\end{linenumbers}
+	
 
 \end{document}
