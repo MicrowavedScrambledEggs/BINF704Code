@@ -1,7 +1,6 @@
 \documentclass{article}
 \usepackage{multirow}
 \usepackage{float}
-\usepackage{lineno}
 \usepackage{fancyvrb}
 
 \title{\vspace{-2.0cm}BIOINF 702 Assignment 1}
@@ -30,7 +29,10 @@
 	
 	\begin{enumerate}
 		\item Input arbitrary allele frequencies $p_A, p_B, p_O$ that sum to 1
-		\item Assuming HW-Equilibrium, estimate genotype counts for $n_{AO}$ and $n_{BO}$ using $n_{AO} = 2Np_Ap_O$ and $n_{BO} = 2Np_Bp_O$, where $N =$ total sample size. [\emph{Appendix .1 lines 22, 24}]
+		\item Assuming HW-Equilibrium, estimate genotype counts for $n_{AO}$ and $n_{BO}$ using:
+		 \[n_{AO} = \frac{2n_ap_Ap_O}{2p_ap_o + p_a^2} \] 
+		 \[n_{BO} = \frac{2n_bp_Bp_O}{2p_bp_o + p_b^2}\] 
+		 where $N =$ total sample size. [\emph{Appendix .1 lines 22, 24}]
 		\item Estimate genotype counts for $n_{AA}$ and $n_{BB}$ using $n_{AA} = n_{A} - n_{AO}$ and $n_{BB} = n_{B} - n_{BO}$. [\emph{Appendix .1 lines 23, 25}]
 		\item Calculate new allele frequency estimates as follows:
 		\[p_{ANew} = \frac{2n_{AA} + n_{AO} + n_{AB}}{2N}\]
@@ -61,21 +63,20 @@
 		\begin{tabular}{l|ll|ll}
 			\multirow{2}{*}{Phenotype} & \multicolumn{2}{l|}{Estimated frequency}  & \multicolumn{2}{l}{Observed frequency}    \\ \cline{2-5} 
 			& \multicolumn{1}{l|}{Calculation} & Value  & \multicolumn{1}{l|}{Calculation} & Value  \\ \hline
-			A                          & $p_A^2 + 2p_Ap_O$                & 0.4085 & $n_A \div N$                     & 0.5172 \\
-			B                          & $p_B^2 + 2p_Bp_O$                & 0.2361 & $n_B \div N$                     & 0.3448 \\
-			AB                         & $2p_Ap_B$                        & 0.3210 & $n_{AB} \div N$                  & 0.1034 \\
-			O                          & $p_O^2$                          & 0.0345 & $n_O \div N$                     & 0.0345
+			A                          & $p_A^2 + 2p_Ap_O$                & 0.4861 & $n_A \div N$                     & 0.5172 \\
+			B                          & $p_B^2 + 2p_Bp_O$                & 0.1899 & $n_B \div N$                     & 0.3448 \\
+			AB                         & $2p_Ap_B$                        & 0.1444 & $n_{AB} \div N$                  & 0.1034 \\
+			O                          & $p_O^2$                          & 0.1796 & $n_O \div N$                     & 0.0345
 		\end{tabular}
 	\end{table}
 
-	As can be observed in the above table, aside from O, the frequencies do not match, with AB being at much lower frequency than expected. This is possibly due to the sample being out of Hardy-Weinberg equilibrium. Further study would be needed to find which of the assumptions behind HW are not holding, and the EM model would need to be adjusted accordingly. However, this could just be sample variance and another larger sample may have phenotype frequencies closer to those estimated by the model. 
+	As can be observed in the above table the frequencies do not match, with AB being at much lower frequency than expected. This is possibly due to the sample being out of Hardy-Weinberg equilibrium. Further study would be needed to find which of the assumptions behind HW are not holding, and the EM model would need to be adjusted accordingly. However, this could just be sample variance and another larger sample may have phenotype frequencies closer to those estimated by the model. 
 	
 	\section{Appendix}
 	
 	\appendix
 	
 	\subsection{R Scrpt}
-	\begin{linenumbers}
 		\begin{Verbatim}[numbers=left]
 nA <- 15
 nB <- 10
@@ -86,6 +87,12 @@ realPhenFreqA <- nA / N
 realPhenFreqB <- nB / N
 realPhenFreqAB <- nAB / N
 realPhenFreqO <- nO / N
+
+# Function used by EM to test if new parameter estimate is acceptibly 
+# close to previous parameter estimate
+closeEnough <- function(n1, n2, closeness) {
+	return(n1 > n2 - closeness & n1 < n2 + closeness)
+}
 
 # Expectation Maximization for blood type allele frequencies
 # Takes a vector of initial allele frequency guesses (pInit) and observed
@@ -98,16 +105,21 @@ emBlood <- function(pInit, nA, nB, nAB, nO) {
 	N <- nA +nB + nAB + nO
 	count <- 1
 	while(TRUE){
-		nAO <- 2* pA * pO * N
+		nAO <- (2* pA * pO * nA) / (pA**2 + 2* pA * pO)
 		nAA <- nA - nAO
-		nBO <- 2* pB * pO * N
+		nBO <- (2* pB * pO * nA) / (pB**2 + 2* pB * pO)
 		nBB <- nB - nBO
 		
 		newPA <- (2*nAA + nAO + nAB) / (2*N)
 		newPB <- (2*nBB + nBO + nAB) / (2*N)
 		newPO <- (2*nO + nBO + nAO) / (2*N)
 		
-		if (newPA != pA || newPB != pB || newPO != pO) {
+		closeness <- 0.0000000001
+		
+		if (!closeEnough(newPA, pA, closeness) 	
+			|| !closeEnough(newPB, pB, closeness) 
+			|| !closeEnough(newPO, pO, closeness)) 
+		{
 			pA <- newPA
 			pB <- newPB
 			pO <- newPO
@@ -162,7 +174,6 @@ observed <- c(realPhenFreqA, realPhenFreqB, realPhenFreqAB, realPhenFreqO)
 comparison <- cbind(estimated, observed)
 row.names(comparison) <- c('A', 'B', 'AB', 'O')
 		\end{Verbatim}
-	\end{linenumbers}
 	
 
 \end{document}

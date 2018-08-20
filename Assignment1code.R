@@ -8,6 +8,12 @@ realPhenFreqB <- nB / N
 realPhenFreqAB <- nAB / N
 realPhenFreqO <- nO / N
 
+# Function used by EM to test if new parameter estimate is acceptibly 
+# close to previous parameter estimate
+closeEnough <- function(n1, n2, closeness) {
+  return(n1 > n2 - closeness & n1 < n2 + closeness)
+}
+
 # Expectation Maximization for blood type allele frequencies
 # Takes a vector of initial allele frequency guesses (pInit) and observed
 # phenotype counts (nA, nB, nAB, nO)
@@ -19,16 +25,19 @@ emBlood <- function(pInit, nA, nB, nAB, nO) {
   N <- nA +nB + nAB + nO
   count <- 1
   while(TRUE){
-    nAO <- 2* pA * pO * N
+    nAO <- (2* pA * pO * nA) / (pA**2 + 2* pA * pO)
     nAA <- nA - nAO
-    nBO <- 2* pB * pO * N
+    nBO <- (2* pB * pO * nA) / (pB**2 + 2* pB * pO)
     nBB <- nB - nBO
     
     newPA <- (2*nAA + nAO + nAB) / (2*N)
     newPB <- (2*nBB + nBO + nAB) / (2*N)
     newPO <- (2*nO + nBO + nAO) / (2*N)
     
-    if (newPA != pA || newPB != pB || newPO != pO) {
+    closeness <- 1e-15
+    
+    if (!closeEnough(newPA, pA, closeness) || !closeEnough(newPB, pB, closeness) 
+        || !closeEnough(newPO, pO, closeness)) {
       pA <- newPA
       pB <- newPB
       pO <- newPO
