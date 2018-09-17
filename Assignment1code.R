@@ -27,7 +27,7 @@ emBlood <- function(pInit, nA, nB, nAB, nO) {
   while(TRUE){
     nAO <- (2* pA * pO * nA) / (pA**2 + 2* pA * pO)
     nAA <- nA - nAO
-    nBO <- (2* pB * pO * nA) / (pB**2 + 2* pB * pO)
+    nBO <- (2* pB * pO * nB) / (pB**2 + 2* pB * pO)
     nBB <- nB - nBO
     
     newPA <- (2*nAA + nAO + nAB) / (2*N)

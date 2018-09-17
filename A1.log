@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2018.8.14)  20 AUG 2018 18:27
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9) (preloaded format=pdflatex 2016.9.7)  20 AUG 2018 22:09
 entering extended mode
-**A1.tex
+**./A1.tex
 (A1.tex
-LaTeX2e <2015/01/01> patch level 2
-Babel <3.9m> and hyphenation patterns for 69 languages loaded.
+LaTeX2e <2016/03/31> patch level 3
+Babel <3.9r> and hyphenation patterns for 75 language(s) loaded.
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\article.cls"
 Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
 ("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\base\size10.clo"
@@ -32,27 +32,74 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \@float@everytoks=\toks15
 \@floatcapt=\box27
 )
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\fancyvrb\fancyvrb.sty"
+Package: fancyvrb 2008/02/07
 
-! LaTeX Error: File `fancyvrb.sty' not found.
+Style option: `fancyvrb' v2.7a, with DG/SPQR fixes, and firstline=lastline fix 
+<2008/02/07> (tvz)
+("C:\Program Files (x86)\MiKTeX 2.9\tex\latex\graphics\keyval.sty"
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks16
+)
+\FV@CodeLineNo=\count88
+\FV@InFile=\read1
+\FV@TabBox=\box28
+\c@FancyVerbLine=\count89
+\FV@StepNumber=\count90
+\FV@OutFile=\write3
+) (A1.aux)
+\openout1 = `A1.aux'.
 
-Type X to quit or <RETURN> to proceed,
-or enter new name. (Default extension: sty)
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 10.
+LaTeX Font Info:    ... okay on input line 10.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 10.
+LaTeX Font Info:    ... okay on input line 10.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 10.
+LaTeX Font Info:    ... okay on input line 10.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 10.
+LaTeX Font Info:    ... okay on input line 10.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 10.
+LaTeX Font Info:    ... okay on input line 10.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 10.
+LaTeX Font Info:    ... okay on input line 10.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 12.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 12.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 12.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 17.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 17.
 
-Enter file name: 
-! Emergency stop.
-<read *> 
-         
-l.5 
-     
-*** (cannot \read from terminal in nonstop modes)
+[1
 
- 
+{C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map}] [2] [3] [4] [5] (A1.aux) 
+) 
 Here is how much of TeX's memory you used:
- 272 strings out of 493673
- 3155 string characters out of 3141524
- 52954 words of memory out of 3000000
- 3702 multiletter control sequences out of 15000+200000
- 3640 words of font info for 14 fonts, out of 3000000 for 9000
- 1025 hyphenation exceptions out of 8191
- 23i,0n,17p,131b,36s stack positions out of 5000i,500n,10000p,200000b,50000s
-!  ==> Fatal error occurred, no output PDF file produced!
+ 705 strings out of 493334
+ 9717 string characters out of 3136673
+ 67099 words of memory out of 3000000
+ 4291 multiletter control sequences out of 15000+200000
+ 8409 words of font info for 30 fonts, out of 3000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 23i,10n,19p,727b,263s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><
+C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:
+/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Pr
+ogram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Progr
+am Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program 
+Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Fil
+es (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Program Files (
+x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program Files (x86)
+/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files (x86)/M
+iKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy7.pfb><C:/Program Files (x86)/MiKT
+eX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Files (x86)/MiKTeX
+ 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on A1.pdf (5 pages, 153395 bytes).
+PDF statistics:
+ 66 PDF objects out of 1000 (max. 8388607)
+ 0 named destinations out of 1000 (max. 500000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+
