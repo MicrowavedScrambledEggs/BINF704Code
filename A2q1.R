@@ -53,10 +53,12 @@ optim(c(0.8, 0.8), function(b) logistReg(b[1], b[2], genPhen),
 # Looks good
 
 # Generate bootstrap samples
-# 30 samples just cos stats rule of thumb number 
+# 100 samples seems like enough to measure variance???
+B = 100
+
 set.seed(123)
 bootSamps <- list()
-for(i in 1:30){
+for(i in 1:B){
   bootSamps[[i]] <- genPhen[sample.int(nrow(genPhen), replace = TRUE),]
 }
 
@@ -81,7 +83,19 @@ estVarb0 <- sum(varsb0) / (length(b0s) - 1)
 estVarb1 <- sum(varsb1) / (length(b1s) - 1)
 
 # take a look at the distributions of the estimates
-hist(b0s)
-hist(b1s)
+hist(b0s, xlab = "Beta0 ML estimates", 
+     main = paste("Beta0 ML estimate distribution for", B, 
+                  "bootstap samples"))
+# Mark the beta0 estimate for all the data
+abline(v = mlAllData$par[1], col = "red")
+legend("topleft", legend = c("Beta0 ML estimate\nfor full dataset"), 
+       col = c("red"), lty = c(1))
 
+hist(b1s, xlab = "Beta1 ML estimates",
+     main = paste("Beta1 ML estimate distribution for", B, 
+                  "bootstap samples"))
+# Mark the beta0 estimate for all the data
+abline(v = mlAllData$par[2], col = "red")
+legend("topleft", legend = c("Beta1 ML estimate\nfor full dataset"), 
+       col = c("red"), lty = c(1))
 
