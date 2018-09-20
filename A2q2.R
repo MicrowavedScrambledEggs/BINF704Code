@@ -54,6 +54,7 @@ for(race in races){
     trend.test <- prop.trend.test(observed[,2], apply(observed, 1, sum),
                                   score = c(2,1,0))
     race.Assoc.Tests[[race]] <- assoc.test
+    race.Assoc.Tests[[race]]$observed <- observed
     race.Trend.Tests[[race]] <- trend.test
   }
 }
