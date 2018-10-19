@@ -99,3 +99,13 @@ abline(v = mlAllData$par[2], col = "red")
 legend("topleft", legend = c("Beta1 ML estimate\nfor full dataset"), 
        col = c("red"), lty = c(1))
 
+# test for association
+testAssoc <- avb1**2 / estVarb1
+pAssoc <- pchisq(testAssoc, 1, lower.tail = FALSE)
+# or
+logBeta1.as.0 <- optim(
+  0.1, function(b) logistReg(b, 0, bootSamp), method = "Brent",
+  lower = -100, upper = 100,
+  control = c(fnscale = -1))
+testAssoc2 <- 2*abs(logBeta1.as.0$value - mlAllData$value)
+pAssoc2 <- pchisq(testAssoc2, 1, lower.tail = FALSE)
