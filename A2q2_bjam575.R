@@ -22,11 +22,40 @@ for(race in races){
 }
 raceTests
 
+# # looking for Wahlund effect
+# mi <- c()
+# pAi <- c()
+# pai <- c()
+# races <- levels(fms.Dat$Race)
+# races <- c(races, NA)
+# for(race in races){
+#   if(is.na(race))
+#     raceGen <- fms.Dat$akt1_t10726c_t12868c[which(is.na(fms.Dat$Race))]
+#   else
+#     raceGen <- fms.Dat$akt1_t10726c_t12868c[which(fms.Dat$Race == race)]
+#   if(length(raceGen) >= 30){
+#     raceGen <- raceGen[which(!is.na(raceGen))]
+#     mi <- c(mi, length(raceGen) / nrow(fms.Dat))
+#     pAi <- c(pAi, (table(raceGen)[1]*2 + table(raceGen)[2]) / (2*length(raceGen)))
+#     pai <- c(pai, (table(raceGen)[3]*2 + table(raceGen)[2]) / (2*length(raceGen)))
+#   }
+# }
+# EpA <- sum(mi*pAi)
+# pAA <- EpA**2 + var(pAi)
+# Epa <- sum(mi*pai)
+# paa <- Epa**2 + var(pAi)
+# pAa <- 1 - pAA - paa
+# # Expected gen counts
+# length(which(!is.na(fms.Dat$akt1_t10726c_t12868c)))*c(pAA, pAa, paa)
+# # compare to actual
+# table(fms.Dat$akt1_t10726c_t12868c)
+
 # b) testing association between genotypes and phenotype
 
-loci.to.test <- fms.Dat$esr1_rs1042717
-phen.to.test <- rep(0, nrow(fms.Dat))
-phen.to.test[fms.Dat$pre.BMI > 25] <- 1
+individuals <- which(!is.na(fms.Dat$esr1_rs1042717) & !is.na(fms.Dat$pre.BMI))
+loci.to.test <- fms.Dat$esr1_rs1042717[individuals]
+phen.to.test <- rep(0, length(individuals))
+phen.to.test[fms.Dat$pre.BMI[individuals] > 25] <- 1
 phen.to.test <- factor(phen.to.test)
 
 association.Test <- chisq.test(loci.to.test, phen.to.test)
@@ -40,7 +69,7 @@ names(race.Assoc.Tests) <- races
 race.Trend.Tests <- vector("list", length = length(races))
 names(race.Trend.Tests) <- races
 for(race in races){
-  raceRows <- which(fms.Dat$Race == race)
+  raceRows <- which(fms.Dat$Race[individuals] == race)
   raceGen <- fms.Dat$esr1_rs1042717[raceRows]
   racePhen <- rep(0, length(raceGen))
   racePhen[fms.Dat$pre.BMI[raceRows] > 25] <- 1

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9) (preloaded format=pdflatex 2016.9.7)  20 SEP 2018 23:15
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9) (preloaded format=pdflatex 2016.9.7)  21 SEP 2018 15:49
 entering extended mode
 **./A2.tex
 (A2.tex
@@ -185,29 +185,37 @@ File: Beta1.png Graphic file (type png)
  <use Beta1.png>
 Package pdftex.def Info: Beta1.png used on input line 40.
 (pdftex.def)             Requested size: 303.23143pt x 219.0448pt.
- [2 <./Beta0.png> <./Beta1.png>] (A2.aux) ) 
+
+Underfull \hbox (badness 10000) in paragraph at lines 39--41
+
+ []
+
+[2 <./Beta0.png> <./Beta1.png>] [3] [4] (A2.aux) ) 
 Here is how much of TeX's memory you used:
- 1938 strings out of 493334
- 28129 string characters out of 3136673
- 91324 words of memory out of 3000000
- 5465 multiletter control sequences out of 15000+200000
- 7756 words of font info for 28 fonts, out of 3000000 for 9000
+ 1946 strings out of 493334
+ 28217 string characters out of 3136673
+ 91340 words of memory out of 3000000
+ 5472 multiletter control sequences out of 15000+200000
+ 8409 words of font info for 30 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 40i,6n,25p,616b,189s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Program Files (x86)/MiKTeX 2.9/f
-onts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fon
-ts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts
-/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/t
-ype1/public/amsfonts/cm/cmmi7.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type
-1/public/amsfonts/cm/cmr10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/p
-ublic/amsfonts/cm/cmr12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/publ
-ic/amsfonts/cm/cmr17.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/
-amsfonts/cm/cmr7.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsf
-onts/cm/cmsy10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfon
+ 40i,8n,25p,957b,189s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/Program Files (x86)/MiKTe
+X 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files (x86)/MiKTeX 
+2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files (x86)/MiKTeX 2.
+9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files (x86)/MiKTeX 2.9/
+fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fo
+nts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts
+/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/ty
+pe1/public/amsfonts/cm/cmr12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1
+/public/amsfonts/cm/cmr17.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/pu
+blic/amsfonts/cm/cmr7.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public
+/amsfonts/cm/cmsy10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/a
+msfonts/cm/cmsy7.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsf
+onts/cm/cmti10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfon
 ts/cm/cmtt10.pfb>
-Output written on A2.pdf (2 pages, 125548 bytes).
+Output written on A2.pdf (4 pages, 165689 bytes).
 PDF statistics:
- 53 PDF objects out of 1000 (max. 8388607)
+ 71 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  11 words of extra memory for PDF output out of 10000 (max. 10000000)
 
